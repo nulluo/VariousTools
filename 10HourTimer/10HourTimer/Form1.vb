@@ -15,7 +15,7 @@
             Me.countDownLabel.Text = EndTime.Subtract(Now).ToString("hh\:mm\:ss")
 
             If EndTime.CompareTo(Now) < 0 Then
-                'UNIMPLEMENTED: ここでアラート通知処理を書く
+                WindowFlasher.Flash()
             End If
         End If
     End Sub

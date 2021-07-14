@@ -30,10 +30,16 @@ Public Class WindowFlasher
         fInfo.cbSize = Convert.ToUInt32(Marshal.SizeOf(fInfo))
         fInfo.hwnd = GetMainWindowHandle(Constants.ProcessName)
         fInfo.dwFlags = FLASHW_ALL
-        '   fInfo.uCount = 5         ' 点滅する回数
-        fInfo.dwTimeout = 0
+        fInfo.uCount = 0         ' 点滅する回数
+        fInfo.dwTimeout = 500
 
         FlashWindowEx(fInfo)
+        'メッセージ（警告）を鳴らす
+        System.Media.SystemSounds.Hand.Play()
+
+        '何故か2回FlashWindowEx呼ばないと点滅しない
+        FlashWindowEx(fInfo)
+
     End Sub
 
     '指定したプロセス名のメイン・ウィンドウ・ハンドルを取得する
