@@ -32,6 +32,9 @@ Partial Class Form1
         Me.Label4 = New System.Windows.Forms.Label()
         Me.endTimeLabel = New System.Windows.Forms.Label()
         Me.resetButton = New System.Windows.Forms.Button()
+        Me.countDownLabel = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'startButton
@@ -112,17 +115,47 @@ Partial Class Form1
         Me.resetButton.Text = "Reset"
         Me.resetButton.UseVisualStyleBackColor = True
         '
+        'countDownLabel
+        '
+        Me.countDownLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.countDownLabel.Font = New System.Drawing.Font("Yu Gothic UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point)
+        Me.countDownLabel.Location = New System.Drawing.Point(56, 238)
+        Me.countDownLabel.Name = "countDownLabel"
+        Me.countDownLabel.Size = New System.Drawing.Size(351, 67)
+        Me.countDownLabel.TabIndex = 1
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(13, 193)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(185, 41)
+        Me.Label5.TabIndex = 2
+        Me.Label5.Text = "Count Down"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(330, 363)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(188, 58)
+        Me.Button1.TabIndex = 3
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(17.0!, 41.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSize = True
         Me.ClientSize = New System.Drawing.Size(813, 461)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.endTimeLabel)
         Me.Controls.Add(Me.startTimeLabel)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.countDownLabel)
         Me.Controls.Add(Me.nowTimeLabel)
         Me.Controls.Add(Me.resetButton)
         Me.Controls.Add(Me.startButton)
@@ -143,4 +176,7 @@ Partial Class Form1
     Friend WithEvents Label4 As Label
     Friend WithEvents endTimeLabel As Label
     Friend WithEvents resetButton As Button
+    Friend WithEvents countDownLabel As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Button1 As Button
 End Class

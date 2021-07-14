@@ -5,5 +5,6 @@
     ''' </summary>
     Public Const Limit As Integer = 10
 
+    Public Const ProcessName As String = "10HourTimer"
 
 End Module
