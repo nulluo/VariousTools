@@ -1,0 +1,36 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+VariousTools2017
+</name>
+</assembly>
+<members>
+<member name="T:VariousTools2017.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:VariousTools2017.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:VariousTools2017.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="F:VariousTools2017.Constants.Limit">
+ <summary>
+ 制限時間(単位:時間)
+ </summary>
+</member>
+<member name="M:VariousTools2017.Form1.InitializeForm">
+ <summary>
+ 画面初期化
+ </summary>
+</member>
+</members>
+</doc>
