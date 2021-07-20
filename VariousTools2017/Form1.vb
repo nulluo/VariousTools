@@ -7,6 +7,8 @@
 
     'UNIMPLEMENTED: 2017に移行した時にソリューションとプロジェクトの単位が変わっちゃったのを修正する
     'UNIMPLEMENTED: 10時間オーバしたら22時(深夜残業)が次のデッドラインなので、それも通知するように機能追加
+    'UNIMPLEMENTED: 端末を再起動した時→JSONなどの外部ファイルに開始時刻を書き出して、ちゃんと再起動後もタイマーが有効になるよう改善する
+    'UNIMPLEMENTED: アラート音の鳴り方がおかしい（繰り返し鳴り続ける）のを改善
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.InitializeForm()
