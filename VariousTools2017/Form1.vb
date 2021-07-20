@@ -5,6 +5,9 @@
 
     Private Property IsStarted As Boolean
 
+    'UNIMPLEMENTED: 2017に移行した時にソリューションとプロジェクトの単位が変わっちゃったのを修正する
+    'UNIMPLEMENTED: 10時間オーバしたら22時(深夜残業)が次のデッドラインなので、それも通知するように機能追加
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.InitializeForm()
     End Sub
