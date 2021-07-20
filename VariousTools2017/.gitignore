@@ -22,4 +22,4 @@ __pycache__
 *.user
 *.suo
 *.bak
-.vs
+.vs/
