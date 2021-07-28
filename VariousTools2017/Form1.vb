@@ -60,6 +60,23 @@
         End Set
     End Property
 
+
+    Dim _isDeadEndCountdownOnGoing As Boolean
+    ''' <summary>
+    ''' カウントダウン終了後の残り1時間のカウントダウン継続中であるかどうか
+    ''' </summary>
+    ''' <returns>IsCountdownGoingがFalseになってから1時間経過するまでの間のみTrueを返し、それ以外の場合はFalseを返す。</returns>
+    Private Property IsDeadEndCountdownOnGoing As Boolean
+        Get
+            Return _isCountdownOnGoing
+        End Get
+        Set(value As Boolean)
+
+        End Set
+    End Property
+
+
+
     ''' <summary>
     ''' 22時を過ぎているかどうか
     ''' </summary>
@@ -78,15 +95,17 @@
     'UNIMPLEMENTED: 時刻表示を2桁固定で先頭0埋めにする
     'UNIMPLEMENTED: 2017に移行した時にソリューションとプロジェクトの単位が変わっちゃったのを修正する
     'UNIMPLEMENTED: アラート音の鳴り方がおかしい（繰り返し鳴り続ける）のを改善
+    'UNIMPLEMENTED: アラーム鳴動中、22時カウントダウンの文字色を変える▶10時間オーバーのやつにも同じ考え方が使える
+
 
     ''' <summary>
     ''' 画面初期化
     ''' </summary>
     Private Sub InitializeForm()
-
+        Dim nowTime As Date = Now
         Dim endTimeMySettings As Date = My.Settings.EndTime
         Dim startTimeMySettings As Date = My.Settings.StartTime
-        If endTimeMySettings.CompareTo(Now) < 0 Then
+        If endTimeMySettings.CompareTo(nowTime) < 0 Then
             '設定ファイルに保存されたカウントダウン終了時刻を過ぎている場合は、
             '既に今日のカウントダウン終了時刻を過ぎた後か、
             '設定ファイルの時刻は昨日以前に設定したカウントダウン終了時刻である場合なので
@@ -102,7 +121,13 @@
             Me.startTimeLabel.Text = String.Empty
             Me.endTimeLabel.Text = String.Empty
             Me.countDownLabel.Text = String.Empty
-
+            If endTimeMySettings.AddHours(1).CompareTo(nowTime) < 0 Then
+                '設定ファイルに保存されたカウントダウン終了時刻から1時間以上過ぎている場合は
+                'DeadEndへのカウントダウンも終了しているのでDeadEndカウントダウン実行中フラグを下ろす
+                Me.IsDeadEndCountdownOnGoing = False
+            Else
+                Me.IsDeadEndCountdownOnGoing = True
+            End If
         Else
             '設定ファイルに保存されたカウントダウン終了時刻を過ぎていない場合は、
             'アラーム設定後に端末の再起動等でアプリが終了した場合なので、
@@ -110,6 +135,12 @@
             Me.StartTime = startTimeMySettings
             Me.EndTime = endTimeMySettings
             Me.IsCountdownOnGoing = True
+        End If
+
+        If Not Me.IsDeadEndCountdownOnGoing Then
+            Me.countDownLabel.ForeColor = Color.Black
+        Else
+            Me.countDownLabel.ForeColor = Color.Red
         End If
     End Sub
 
@@ -119,21 +150,22 @@
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Me.nowTimeLabel.Text = Now.ToString("HH:mm:ss")
+        Dim nowTime As Date = Now
+        Me.nowTimeLabel.Text = nowTime.ToString("HH:mm:ss")
 
         '22時へのカウントダウン
         If Not IsOver22 Then
             Dim pm10oClock As Date
-            With Now()
+            With nowTime
                 pm10oClock = New Date(.Year, .Month, .Day, 22, 0, 0)
             End With
 
-            If pm10oClock.CompareTo(Now) < 0 Then
+            If pm10oClock.CompareTo(nowTime) < 0 Then
                 IsOver22 = True
                 WindowFlasher.Flash()
             Else
                 Dim countFor22 As TimeSpan
-                countFor22 = pm10oClock.Subtract(Now)
+                countFor22 = pm10oClock.Subtract(nowTime)
                 Me.countdownFor22Label.Text = countFor22.ToString("hh\:mm\:ss")
             End If
 
@@ -141,12 +173,31 @@
 
         'EndTimeへのカウントダウン
         If IsCountdownOnGoing Then
-            Me.countDownLabel.Text = EndTime.Subtract(Now).ToString("hh\:mm\:ss")
+            Me.countDownLabel.Text = EndTime.Subtract(nowTime).ToString("hh\:mm\:ss")
             Debug.WriteLine("IsCountdownOnGoing")
-            If EndTime.CompareTo(Now) < 0 Then
+            If EndTime.CompareTo(nowTime) < 0 Then
                 Me.IsAlarmed = True
-                Debug.WriteLine("EndTimeを過ぎた")
+
+                'Debug.WriteLine("EndTimeを過ぎた")
+                Me.IsDeadEndCountdownOnGoing = True
+                Me.countDownForLabel.Text = My.Settings.EndTime.AddHours(1) & "まで"
                 WindowFlasher.Flash()
+            End If
+        End If
+
+        'DeadEndTimeへのカウントダウン
+        If Me.IsDeadEndCountdownOnGoing Then
+            Me.countDownLabel.Text = EndTime.AddHours(1).Subtract(nowTime).ToString("hh\:mm\:ss")
+            If EndTime.AddMinutes(45).CompareTo(nowTime) < 0 Then
+                Me.IsAlarmed = True
+                'Debug.WriteLine("EndTimeを過ぎた")
+                Me.IsDeadEndCountdownOnGoing = True
+                WindowFlasher.Flash()
+                Me.countDownLabel.ForeColor = Color.Red
+            End If
+            If EndTime.AddHours(1).CompareTo(nowTime) < 0 Then
+                Me.IsDeadEndCountdownOnGoing = False
+                Me.countDownForLabel.Text = String.Empty
             End If
         End If
     End Sub
@@ -155,6 +206,7 @@
         Me.StartTime = Now
         Me.EndTime = Now.AddHours(Constants.Limit)
         Me.IsCountdownOnGoing = True
+        Me.countDownForLabel.Text = My.Settings.EndTime & "まで"
     End Sub
 
     Private Sub resetButton_Click(sender As Object, e As EventArgs) Handles resetButton.Click

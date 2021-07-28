@@ -33,7 +33,7 @@ Partial Class Form1
         Me.endTimeLabel = New System.Windows.Forms.Label()
         Me.resetButton = New System.Windows.Forms.Button()
         Me.countDownLabel = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.countDownForLabel = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.countdownFor22Label = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -131,14 +131,13 @@ Partial Class Form1
         Me.countDownLabel.Size = New System.Drawing.Size(381, 87)
         Me.countDownLabel.TabIndex = 1
         '
-        'Label5
+        'countDownForLabel
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(14, 260)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(166, 30)
-        Me.Label5.TabIndex = 2
-        Me.Label5.Text = "Count Down"
+        Me.countDownForLabel.AutoSize = True
+        Me.countDownForLabel.Location = New System.Drawing.Point(14, 260)
+        Me.countDownForLabel.Name = "countDownForLabel"
+        Me.countDownForLabel.Size = New System.Drawing.Size(0, 30)
+        Me.countDownForLabel.TabIndex = 2
         '
         'Button1
         '
@@ -211,7 +210,7 @@ Partial Class Form1
         Me.Controls.Add(Me.endTimeLabel)
         Me.Controls.Add(Me.startTimeLabel)
         Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.countDownForLabel)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.countdownFor22Label)
         Me.Controls.Add(Me.countDownLabel)
@@ -237,7 +236,7 @@ Partial Class Form1
     Friend WithEvents endTimeLabel As Label
     Friend WithEvents resetButton As Button
     Friend WithEvents countDownLabel As Label
-    Friend WithEvents Label5 As Label
+    Friend WithEvents countDownForLabel As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents countdownFor22Label As Label
     Friend WithEvents Label6 As Label
